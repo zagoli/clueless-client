@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card, Input, Button, ButtonGroup, Helper, Listgroup } from 'flowbite-svelte';
-	import { playerNames } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
+	import { game } from '$lib/stores/game.svelte';
 
 	let newPlayerName = $state('');
 	let error = $state('');
@@ -21,7 +21,7 @@
 		if (otherPlayers.length === 0) {
 			error = 'Aggiungi almeno un altro giocatore';
 		} else {
-			playerNames.push(...otherPlayers);
+			game.addPlayers(otherPlayers);
 			goto('/game');
 		}
 	}
