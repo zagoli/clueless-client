@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/svelte';
 import Header from './Header.svelte';
 import { goto } from '$app/navigation';
 import { playerNames } from '$lib/stores/players.svelte';
-import { tick } from 'svelte';
 
 vi.mock('$app/navigation', () => ({
     goto: vi.fn()
@@ -25,18 +24,17 @@ describe('Header Component', () => {
 
     it('should display reset button', () => {
         render(Header);
-        expect(screen.getByText('Ricomincia')).toBeTruthy();
+        expect(screen.getByTestId("reset-button")).toBeTruthy();
     });
 
     it('should show confirmation modal when reset button is clicked', async () => {
         render(Header);
-        const resetButton = screen.getByText('Ricomincia');
+        const resetButton = screen.getByTestId("reset-button");
         await fireEvent.click(resetButton);
-        await tick();
 
         const modal = screen.getByTestId('reset-modal');
         expect(modal).toBeTruthy();
-        expect(modal.getAttribute('open')).toBeTruthy();
+        expect(modal).toHaveProperty('open');
         expect(screen.getByText('Sei sicuro di voler ricominciare il gioco?')).toBeTruthy();
     });
 
@@ -45,13 +43,11 @@ describe('Header Component', () => {
         playerNames.push('TestPlayer');
 
         render(Header);
-        const resetButton = screen.getByText('Ricomincia');
+        const resetButton = screen.getByTestId("reset-button");
         await fireEvent.click(resetButton);
-        await tick();
 
         const confirmButton = screen.getByText('Si, ricomincia');
         await fireEvent.click(confirmButton);
-        await tick();
 
         expect(playerNames.length).toBe(0);
         expect(goto).toHaveBeenCalledWith('/');
@@ -64,13 +60,11 @@ describe('Header Component', () => {
         playerNames.push('TestPlayer');
 
         render(Header);
-        const resetButton = screen.getByText('Ricomincia');
+        const resetButton = screen.getByTestId("reset-button");
         await fireEvent.click(resetButton);
-        await tick();
 
-        const cancelButton = screen.getByText('No, annulla');
+        const cancelButton = screen.getByText('Close');
         await fireEvent.click(cancelButton);
-        await tick();
 
         expect(playerNames.length).toBe(1);
         expect(goto).not.toHaveBeenCalled();
