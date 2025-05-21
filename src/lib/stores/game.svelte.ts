@@ -15,6 +15,7 @@ export class Game {
     #absent_cards: AbsentCards = $state({});
     #questions: Questions = $state([]);
     #game_started: boolean = $state(false);
+    #players: string[] = $state([]);
 
     start() {
         this.#game_started = true;
@@ -27,18 +28,34 @@ export class Game {
         this.#questions = [];
     }
 
-    is_started() {
+    isStarted() {
         return this.#game_started;
     }
 
-    get_hand(player: string) {
+    getHand(player: string) {
         const hand = this.#hands[player];
         return hand ? hand : [];
     }
 
-    get_absent_cards(player: string) {
+    getAbsentCards(player: string) {
         const absent_cards = this.#absent_cards[player];
         return absent_cards ? absent_cards : [];
+    }
+
+    get players() {
+        return this.#players;
+    }
+
+    addPlayer(player: string) {
+        if (!this.#players.includes(player)) {
+            this.#players.push(player);
+        }
+    }
+
+    addPlayers(players: string[]) {
+        for (const player of players) {
+            this.addPlayer(player);
+        }
     }
 
 }

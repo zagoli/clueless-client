@@ -1,21 +1,18 @@
 <script lang="ts">
 	import { Card, Spinner, Input, Button, Helper } from 'flowbite-svelte';
 	import { API_BASE_URL } from '$lib/config';
-	import { playerNames } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import axios from 'axios';
+	import { game } from '$lib/stores/game.svelte';
 
 	let playerName = $state('');
 	let error = $state('');
-	let apiStatus = $state<Promise<boolean> | null>(null);
-
-	onMount(() => {
-		apiStatus = fetch(`${API_BASE_URL}/ping`).then(async (response) => {
-			const text = await response.text();
-			if (text !== 'pong') throw new Error('Invalid response');
-			return true;
-		});
-	});
+	const backendUp = async () => {
+		const res = await axios.get(`${API_BASE_URL}/ping`);
+		if (res.status !== 200 || res.data !== 'pong') {
+			throw new Error('Invalid response');
+		}
+	};
 
 	function handleSubmitPlayerName() {
 		if (!playerName.trim()) {
@@ -23,18 +20,18 @@
 			return;
 		}
 		error = '';
-		playerNames.push(playerName.trim());
+		game.addPlayer(playerName.trim());
 		goto('/players');
 	}
 </script>
 
 <div class="flex h-full items-center justify-center p-4">
 	<div class="w-full max-w-md">
-		{#await apiStatus}
+		{#await backendUp()}
 			<div class="flex items-center justify-center p-6">
 				<Spinner size="8" />
 			</div>
-		{:then status}
+		{:then _}
 			<Card class="p-6 text-center">
 				<h2 class="mb-4 text-2xl font-bold dark:text-white">Iniziamo!</h2>
 				<form

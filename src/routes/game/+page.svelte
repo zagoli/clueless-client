@@ -1,43 +1,31 @@
 <script lang="ts">
-	import { playerNames } from '$lib/stores/players.svelte';
 	import { game } from '$lib/stores/game.svelte';
-	import { onMount } from 'svelte';
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner } from 'flowbite-svelte';
 	import Game from '$lib/components/Game.svelte';
+	import axios from 'axios';
 
-	let newGamePromise: Promise<void> | null = null;
-
-	onMount(() => {
-		if (!game.is_started()) {
-			newGamePromise = fetch(`${API_BASE_URL}/new_game`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ players: playerNames.length })
-			}).then(async (response) => {
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
-				game.start();
-			});
+	const newGame = async () => {
+		const res = await axios.post(`${API_BASE_URL}/new_game`, { players: game.players.length });
+		if (res.status !== 201) {
+			throw new Error('Invalid response');
 		}
-	});
+		game.start();
+	};
 </script>
 
 <div class="flex h-full items-center justify-center p-4">
 	<div class="w-full max-w-5xl px-4">
-		{#if game.is_started()}
+		{#if game.isStarted()}
 			<Tabs tabStyle="full">
 				<TabItem title="Partita" class="w-full" open>
-					<Game {playerNames} {game} />
+					<Game {game} />
 				</TabItem>
 				<TabItem title="Domande" class="w-full">Lorem ipsum</TabItem>
 				<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
 			</Tabs>
 		{:else}
-			{#await newGamePromise}
+			{#await newGame()}
 				<div class="flex items-center justify-center p-6">
 					<Spinner size="8" />
 				</div>
