@@ -26,6 +26,7 @@ export class Game {
         this.#hands = {};
         this.#absent_cards = {};
         this.#questions = [];
+        this.#players = [];
     }
 
     isStarted() {
