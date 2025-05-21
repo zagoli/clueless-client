@@ -4,11 +4,12 @@
 	import { onMount } from 'svelte';
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner } from 'flowbite-svelte';
+	import Game from '$lib/components/Game.svelte';
 
 	let newGamePromise: Promise<void> | null = null;
 
 	onMount(() => {
-		if (!game.game_started) {
+		if (!game.is_started()) {
 			newGamePromise = fetch(`${API_BASE_URL}/new_game`, {
 				method: 'POST',
 				headers: {
@@ -19,7 +20,7 @@
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
-				game.game_started = true;
+				game.start();
 			});
 		}
 	});
@@ -27,9 +28,11 @@
 
 <div class="flex h-full items-center justify-center p-4">
 	<div class="w-full max-w-5xl px-4">
-		{#if game.game_started}
+		{#if game.is_started()}
 			<Tabs tabStyle="full">
-				<TabItem title="Partita" class="w-full" open>Lorem ipsum</TabItem>
+				<TabItem title="Partita" class="w-full" open>
+					<Game {playerNames} {game} />
+				</TabItem>
 				<TabItem title="Domande" class="w-full">Lorem ipsum</TabItem>
 				<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
 			</Tabs>

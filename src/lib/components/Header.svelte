@@ -3,11 +3,13 @@
 	import { goto } from '$app/navigation';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import { playerNames } from '$lib/stores/players.svelte';
+	import { game } from '$lib/stores/game.svelte';
 
 	let showResetModal = $state(false);
 
 	function handleReset() {
 		playerNames.length = 0; // Clear player names array
+		game.reset(); // Reset game state
 		goto('/'); // Navigate back to home page
 	}
 </script>
