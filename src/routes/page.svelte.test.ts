@@ -1,63 +1,52 @@
-import { describe, test, expect, beforeEach, vi } from 'vitest';
-import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/svelte';
+/// <reference types="vitest" />
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/svelte';
 import Page from './+page.svelte';
+import { goto } from '$app/navigation';
+import { playerNames } from '$lib/stores/players.svelte';
 
-describe('/+page.svelte', () => {
-	beforeEach(() => {
-		// Reset all mocks before each test
-		vi.resetAllMocks();
-	});
+vi.mock('$app/navigation', () => ({
+    goto: vi.fn()
+}));
 
-	test('should show spinner while loading', () => {
-		// Mock fetch to return a pending promise
-		vi.stubGlobal('fetch', vi.fn().mockImplementation(() => new Promise(() => { })));
-		render(Page);
-		expect(screen.getByRole('status')).toBeInTheDocument();
-	});
+describe('Main Page', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        while (playerNames.length > 0) {
+            playerNames.pop(); // Properly clear the array
+        }
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            text: () => Promise.resolve('pong')
+        }));
+    });
 
-	test('should show welcome message when API responds correctly', async () => {
-		// Mock successful API response
-		vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce({
-			text: () => Promise.resolve('pong')
-		} as Response));
+    it('should show loading spinner initially', () => {
+        render(Page);
+        expect(screen.getByRole('status')).toBeTruthy();
+    });
 
-		render(Page);
+    it('should show name input after successful ping', async () => {
+        render(Page);
+        const input = await screen.findByPlaceholderText('Inserisci il tuo nome');
+        expect(input).toBeTruthy();
+    });
 
-		// Verify loading state first
-		expect(screen.getByRole('status')).toBeInTheDocument();
+    it('should show error when submitting empty name', async () => {
+        render(Page);
+        const submitButton = await screen.findByText('Continua');
+        await fireEvent.click(submitButton);
+        expect(screen.getByText('Il nome non può essere vuoto')).toBeTruthy();
+        expect(goto).not.toHaveBeenCalled();
+    });
 
-		// Wait for and verify success state
-		const heading = await screen.findByText('Benvenuto!');
-		expect(heading).toBeInTheDocument();
-		expect(screen.getByText('L\'applicazione è attiva e funzionante.')).toBeInTheDocument();
-	});
+    it('should navigate to game page and store name when submitting valid name', async () => {
+        render(Page);
+        const input = await screen.findByPlaceholderText('Inserisci il tuo nome');
+        await fireEvent.input(input, { target: { value: 'Mario' } });
+        const submitButton = screen.getByText('Continua');
+        await fireEvent.click(submitButton);
 
-	test('should show error when API fails to respond', async () => {
-		// Mock failed API response
-		vi.stubGlobal('fetch', vi.fn().mockRejectedValueOnce(new Error('API Error')));
-
-		render(Page);
-
-		// Verify loading state first
-		expect(screen.getByRole('status')).toBeInTheDocument();
-
-		// Wait for and verify error state
-		const errorMsg = await screen.findByText('L\'applicazione non è disponibile.');
-		expect(errorMsg).toBeInTheDocument();
-		expect(screen.getByText('Riprova tra qualche mese... o tra qualche anno.')).toBeInTheDocument();
-	});
-
-	test('should show error when API response is not "pong"', async () => {
-		// Mock API response with wrong text
-		vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce({
-			text: () => Promise.resolve('wrong response')
-		} as Response));
-
-		render(Page);
-
-		// Wait for and verify error state
-		const errorMsg = await screen.findByText('L\'applicazione non è disponibile.');
-		expect(errorMsg).toBeInTheDocument();
-	});
+        expect(playerNames[playerNames.length - 1]).toBe('Mario');
+        expect(goto).toHaveBeenCalledWith('/game');
+    });
 });

@@ -1,12 +1,27 @@
 <script lang="ts">
-	import { Card, Spinner } from 'flowbite-svelte';
+	import { Card, Spinner, Input, Button } from 'flowbite-svelte';
 	import { API_BASE_URL } from '$lib/config';
+	import { playerNames } from '$lib/stores/players.svelte';
+	import { goto } from '$app/navigation';
 
-	const apiStatus = fetch(`${API_BASE_URL}/ping`).then(async (response) => {
+	let playerName = $state('');
+	let error = $state('');
+
+	let apiStatus = fetch(`${API_BASE_URL}/ping`).then(async (response) => {
 		const text = await response.text();
 		if (text !== 'pong') throw new Error('Invalid response');
-		return { isUp: true };
+		return true;
 	});
+
+	function handleSubmitPlayerName() {
+		if (!playerName.trim()) {
+			error = 'Il nome non può essere vuoto';
+			return;
+		}
+		error = '';
+		playerNames.push(playerName.trim());
+		goto('/game');
+	}
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-gray-900 p-4">
@@ -18,8 +33,20 @@
 		{:then status}
 			<Card class="!border-gray-700 !bg-gray-800">
 				<div class="p-6 text-center text-white">
-					<h2 class="mb-4 text-2xl font-bold">Benvenuto!</h2>
-					<p>L'applicazione è attiva e funzionante.</p>
+					<h2 class="mb-4 text-2xl font-bold">Iniziamo!</h2>
+					<form
+						onsubmit={(e) => {
+							e.preventDefault();
+							handleSubmitPlayerName();
+						}}
+						class="flex flex-col gap-4"
+					>
+						<Input bind:value={playerName} placeholder="Inserisci il tuo nome" required />
+						{#if error}
+							<p class="text-sm text-red-500">{error}</p>
+						{/if}
+						<Button type="submit">Continua</Button>
+					</form>
 				</div>
 			</Card>
 		{:catch}
