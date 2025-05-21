@@ -6,6 +6,15 @@ export interface Question {
     room: string;
 }
 
-export const hands = $state<Record<string, string[]>>({});
-export const absent_cards = $state<Record<string, string[]>>({});
-export const questions = $state<Question[]>([]);
+export type Hands = Record<string, string[]>;
+export type AbsentCards = Record<string, string[]>;
+export type Questions = Question[];
+
+export interface Game {
+    hands: Hands;
+    absent_cards: AbsentCards;
+    questions: Questions;
+    game_started: boolean;
+}
+
+export const game = $state<Game>({ hands: {}, absent_cards: {}, questions: [], game_started: false });

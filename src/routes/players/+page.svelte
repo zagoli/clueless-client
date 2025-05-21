@@ -44,7 +44,7 @@
 				}}
 			>
 				<ButtonGroup class="w-full">
-					<Input bind:value={newPlayerName} placeholder="Nome" />
+					<Input bind:value={newPlayerName} placeholder="Nome" autofocus />
 					<Button type="submit">Aggiungi</Button>
 				</ButtonGroup>
 				{#if error}

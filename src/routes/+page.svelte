@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card, Spinner, Input, Button } from 'flowbite-svelte';
+	import { Card, Spinner, Input, Button, Helper } from 'flowbite-svelte';
 	import { API_BASE_URL } from '$lib/config';
 	import { playerNames } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
@@ -44,9 +44,9 @@
 					}}
 					class="flex flex-col gap-4"
 				>
-					<Input bind:value={playerName} placeholder="Inserisci il tuo nome" />
+					<Input bind:value={playerName} placeholder="Inserisci il tuo nome" autofocus />
 					{#if error}
-						<p class="text-sm text-red-500">{error}</p>
+						<Helper class="text-sm text-red-500">{error}</Helper>
 					{/if}
 					<Button type="submit">Continua</Button>
 				</form>
