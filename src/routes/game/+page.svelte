@@ -29,9 +29,9 @@
 	<div class="w-full max-w-5xl px-4">
 		{#if game.game_started}
 			<Tabs tabStyle="full">
-				<TabItem title="Partita" class="w-full" open>Ciao</TabItem>
-				<TabItem title="Domande" class="w-full">Amici</TabItem>
-				<TabItem title="Suggerimenti" class="w-full">Amici</TabItem>
+				<TabItem title="Partita" class="w-full" open>Lorem ipsum</TabItem>
+				<TabItem title="Domande" class="w-full">Lorem ipsum</TabItem>
+				<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
 			</Tabs>
 		{:else}
 			{#await newGamePromise}
