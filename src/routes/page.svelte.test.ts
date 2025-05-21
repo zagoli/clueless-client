@@ -39,7 +39,7 @@ describe('Main Page', () => {
         expect(goto).not.toHaveBeenCalled();
     });
 
-    it('should navigate to game page and store name when submitting valid name', async () => {
+    it('should navigate to players page and store name when submitting valid name', async () => {
         render(Page);
         const input = await screen.findByPlaceholderText('Inserisci il tuo nome');
         await fireEvent.input(input, { target: { value: 'Mario' } });
@@ -47,6 +47,6 @@ describe('Main Page', () => {
         await fireEvent.click(submitButton);
 
         expect(playerNames[playerNames.length - 1]).toBe('Mario');
-        expect(goto).toHaveBeenCalledWith('/game');
+        expect(goto).toHaveBeenCalledWith('/players');
     });
 });

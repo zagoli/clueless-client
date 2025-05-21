@@ -24,7 +24,7 @@
 		}
 		error = '';
 		playerNames.push(playerName.trim());
-		goto('/game');
+		goto('/players');
 	}
 </script>
 
@@ -35,23 +35,21 @@
 				<Spinner size="8" />
 			</div>
 		{:then status}
-			<Card>
-				<div class="p-6 text-center">
-					<h2 class="mb-4 text-2xl font-bold dark:text-white">Iniziamo!</h2>
-					<form
-						onsubmit={(e) => {
-							e.preventDefault();
-							handleSubmitPlayerName();
-						}}
-						class="flex flex-col gap-4"
-					>
-						<Input bind:value={playerName} placeholder="Inserisci il tuo nome" />
-						{#if error}
-							<p class="text-sm text-red-500">{error}</p>
-						{/if}
-						<Button type="submit">Continua</Button>
-					</form>
-				</div>
+			<Card class="p-6 text-center">
+				<h2 class="mb-4 text-2xl font-bold dark:text-white">Iniziamo!</h2>
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						handleSubmitPlayerName();
+					}}
+					class="flex flex-col gap-4"
+				>
+					<Input bind:value={playerName} placeholder="Inserisci il tuo nome" />
+					{#if error}
+						<p class="text-sm text-red-500">{error}</p>
+					{/if}
+					<Button type="submit">Continua</Button>
+				</form>
 			</Card>
 		{:catch}
 			<div class="fixed inset-0 z-50 flex items-center justify-center">

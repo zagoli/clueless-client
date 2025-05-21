@@ -15,4 +15,13 @@ Object.defineProperty(window, 'matchMedia', {
 	}))
 });
 
+// Mock for Web Animations API
+if (typeof Element !== 'undefined') {
+	Element.prototype.animate = vi.fn().mockReturnValue({
+		finished: Promise.resolve(),
+		addEventListener: vi.fn(),
+		cancel: vi.fn()
+	});
+}
+
 // add more mocks here if you need them
