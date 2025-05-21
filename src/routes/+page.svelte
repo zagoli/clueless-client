@@ -3,14 +3,18 @@
 	import { API_BASE_URL } from '$lib/config';
 	import { playerNames } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	let playerName = $state('');
 	let error = $state('');
+	let apiStatus = $state<Promise<boolean> | null>(null);
 
-	let apiStatus = fetch(`${API_BASE_URL}/ping`).then(async (response) => {
-		const text = await response.text();
-		if (text !== 'pong') throw new Error('Invalid response');
-		return true;
+	onMount(() => {
+		apiStatus = fetch(`${API_BASE_URL}/ping`).then(async (response) => {
+			const text = await response.text();
+			if (text !== 'pong') throw new Error('Invalid response');
+			return true;
+		});
 	});
 
 	function handleSubmitPlayerName() {
@@ -41,7 +45,7 @@
 						}}
 						class="flex flex-col gap-4"
 					>
-						<Input bind:value={playerName} placeholder="Inserisci il tuo nome" required />
+						<Input bind:value={playerName} placeholder="Inserisci il tuo nome" />
 						{#if error}
 							<p class="text-sm text-red-500">{error}</p>
 						{/if}
