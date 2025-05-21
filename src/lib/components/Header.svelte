@@ -18,7 +18,7 @@
 		<Button
 			color="light"
 			type="button"
-			pill={true}
+			pill
 			onclick={() => (showResetModal = true)}
 			data-testid="reset-button"
 		>
