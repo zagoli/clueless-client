@@ -28,16 +28,16 @@
 	}
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-gray-900 p-4">
+<div class="flex h-full items-center justify-center p-4">
 	<div class="w-full max-w-md">
 		{#await apiStatus}
 			<div class="flex items-center justify-center p-6">
 				<Spinner size="8" />
 			</div>
 		{:then status}
-			<Card class="!border-gray-700 !bg-gray-800">
-				<div class="p-6 text-center text-white">
-					<h2 class="mb-4 text-2xl font-bold">Iniziamo!</h2>
+			<Card>
+				<div class="p-6 text-center">
+					<h2 class="mb-4 text-2xl font-bold dark:text-white">Iniziamo!</h2>
 					<form
 						onsubmit={(e) => {
 							e.preventDefault();
@@ -54,10 +54,10 @@
 				</div>
 			</Card>
 		{:catch}
-			<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 text-white">
+			<div class="fixed inset-0 z-50 flex items-center justify-center">
 				<div class="px-4 text-center">
 					<p class="mb-4 text-xl">L'applicazione non è disponibile.</p>
-					<p class="text-lg text-gray-400">Riprova tra qualche mese... o tra qualche anno.</p>
+					<p class="text-lg">Riprova tra qualche mese... o tra qualche anno.</p>
 				</div>
 			</div>
 		{/await}

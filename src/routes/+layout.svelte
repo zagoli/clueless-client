@@ -1,5 +1,11 @@
 <script lang="ts">
 	import '../app.css';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
-<slot />
+<div class="flex min-h-screen flex-col">
+	<Header />
+	<main class="flex-1">
+		<slot />
+	</main>
+</div>
