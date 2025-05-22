@@ -59,6 +59,14 @@ export class Game {
         }
     }
 
+    addAbsentCard(player: string, card: string) {
+        if (!this.#absent_cards[player]) {
+            this.#absent_cards[player] = [];
+        }
+        if (!this.#absent_cards[player].includes(card)) {
+            this.#absent_cards[player].push(card);
+        }
+    }
 }
 
 export const game = new Game();

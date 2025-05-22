@@ -28,12 +28,14 @@
 		</div>
 	</div>
 
-	<div class="mt-4">
-		<h3 class="font-medium">Carte assenti</h3>
-		<div class="flex flex-wrap gap-2 py-2">
-			{#each absent_cards as card}
-				<Badge color="red">{card}</Badge>
-			{/each}
+	{#if absent_cards.length > 0}
+		<div class="mt-4">
+			<h3 class="font-medium">Carte assenti</h3>
+			<div class="flex flex-wrap gap-2 py-2">
+				{#each absent_cards as card}
+					<Badge color="red">{card}</Badge>
+				{/each}
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>
