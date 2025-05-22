@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import Header from './Header.svelte';
 import { goto } from '$app/navigation';
-import { playerNames } from '$lib/stores/players.svelte';
+import { game } from '$lib/stores/game.svelte';
 
 vi.mock('$app/navigation', () => ({
     goto: vi.fn()
@@ -11,10 +11,8 @@ vi.mock('$app/navigation', () => ({
 describe('Header Component', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        // Reset playerNames
-        while (playerNames.length > 0) {
-            playerNames.pop();
-        }
+        // Reset game state
+        game.reset();
     });
 
     it('should display Clueless title', () => {
@@ -34,13 +32,13 @@ describe('Header Component', () => {
 
         const modal = screen.getByTestId('reset-modal');
         expect(modal).toBeTruthy();
-        expect(modal).toHaveProperty('open');
+        expect(modal).toHaveProperty('open', true);
         expect(screen.getByText('Sei sicuro di voler ricominciare il gioco?')).toBeTruthy();
     });
 
     it('should reset game and navigate to home when confirmed', async () => {
         // Add a player to verify it gets cleared
-        playerNames.push('TestPlayer');
+        game.addPlayer('TestPlayer');
 
         render(Header);
         const resetButton = screen.getByTestId("reset-button");
@@ -49,7 +47,7 @@ describe('Header Component', () => {
         const confirmButton = screen.getByText('Si, ricomincia');
         await fireEvent.click(confirmButton);
 
-        expect(playerNames.length).toBe(0);
+        expect(game.players.length).toBe(0);
         expect(goto).toHaveBeenCalledWith('/');
 
         const modal = screen.queryByTestId('reset-modal');
@@ -57,7 +55,7 @@ describe('Header Component', () => {
     });
 
     it('should close modal without resetting when canceled', async () => {
-        playerNames.push('TestPlayer');
+        game.addPlayer('TestPlayer');
 
         render(Header);
         const resetButton = screen.getByTestId("reset-button");
@@ -66,7 +64,7 @@ describe('Header Component', () => {
         const cancelButton = screen.getByText('Close');
         await fireEvent.click(cancelButton);
 
-        expect(playerNames.length).toBe(1);
+        expect(game.players.length).toBe(1);
         expect(goto).not.toHaveBeenCalled();
 
         const modal = screen.queryByTestId('reset-modal');

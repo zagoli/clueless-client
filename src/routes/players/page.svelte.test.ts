@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import Page from './+page.svelte';
 import { goto } from '$app/navigation';
-import { playerNames } from '$lib/stores/players.svelte';
+import { game } from '$lib/stores/game.svelte';
 
 vi.mock('$app/navigation', () => ({
     goto: vi.fn()
@@ -12,9 +12,7 @@ vi.mock('$app/navigation', () => ({
 describe('Players Page', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        while (playerNames.length > 0) {
-            playerNames.pop();
-        }
+        game.reset();
     });
 
     it('should show empty list initially', () => {
@@ -37,8 +35,8 @@ describe('Players Page', () => {
         await fireEvent.click(addButton);
 
         expect(screen.getByText('Luigi')).toBeTruthy();
-        // Should not be added to playerNames yet
-        expect(playerNames).not.toContain('Luigi');
+        // Should not be added to game store yet
+        expect(game.players).not.toContain('Luigi');
     });
 
     it('should show error when continuing without players', async () => {
@@ -59,13 +57,13 @@ describe('Players Page', () => {
 
         // Verify player is in list but not in store
         expect(screen.getByText('Mario')).toBeTruthy();
-        expect(playerNames).not.toContain('Mario');
+        expect(game.players).not.toContain('Mario');
 
         // Continue and verify player is added to store
         const continueButton = screen.getByText('Continua');
         await fireEvent.click(continueButton);
 
-        expect(playerNames).toContain('Mario');
+        expect(game.players).toContain('Mario');
         expect(goto).toHaveBeenCalledWith('/game');
     });
 });

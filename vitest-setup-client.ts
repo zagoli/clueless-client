@@ -24,4 +24,7 @@ if (typeof Element !== 'undefined') {
 	});
 }
 
-// add more mocks here if you need them
+// Add showModal polyfill for jsdom
+HTMLDialogElement.prototype.showModal = function () {
+	this.open = true;
+};
