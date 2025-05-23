@@ -11,11 +11,12 @@ export type AbsentCards = Record<string, string[]>;
 export type Questions = Question[];
 
 export class Game {
-    #hands: Hands = $state({});
-    #absent_cards: AbsentCards = $state({});
-    #questions: Questions = $state([]);
-    #game_started: boolean = $state(false);
-    #players: string[] = $state([]);
+    #hands = $state<Hands>({});
+    #absent_cards = $state<AbsentCards>({});
+    #questions = $state<Questions>([]);
+    #game_started = $state(false);
+    #players = $state<string[]>([]);
+    #isUpdating = $state(false);
 
     start() {
         this.#game_started = true;
@@ -27,6 +28,7 @@ export class Game {
         this.#absent_cards = {};
         this.#questions = [];
         this.#players = [];
+        this.#isUpdating = false;
     }
 
     isStarted() {
@@ -45,6 +47,14 @@ export class Game {
 
     get players() {
         return this.#players;
+    }
+
+    get isUpdating() {
+        return this.#isUpdating;
+    }
+
+    set isUpdating(value: boolean) {
+        this.#isUpdating = value;
     }
 
     addPlayer(player: string) {

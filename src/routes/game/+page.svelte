@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { game } from '$lib/stores/game.svelte';
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner, Button } from 'flowbite-svelte';
+	import { PlusOutline } from 'flowbite-svelte-icons';
+	import { game } from '$lib/stores/game.svelte';
 	import Game from '$lib/components/Game.svelte';
 	import axios from 'axios';
-	import { PlusOutline } from 'flowbite-svelte-icons';
 
 	const newGame = async () => {
 		const res = await axios.post(`${API_BASE_URL}/new_game`, { players: game.players.length });
@@ -24,7 +24,12 @@
 			<TabItem title="Domande" class="w-full">Lorem ipsum</TabItem>
 			<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
 		</Tabs>
-		<Button pill class="absolute end-6 bottom-6 p-4!" title="Aggiungi una domanda">
+		<Button
+			pill
+			class="absolute end-6 bottom-6 p-4!"
+			title="Aggiungi una domanda"
+			disabled={game.isUpdating}
+		>
 			<PlusOutline class="h-6 w-6" />
 		</Button>
 	{:else}

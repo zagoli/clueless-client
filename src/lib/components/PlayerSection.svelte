@@ -7,15 +7,17 @@
 		hand: string[];
 		absentCards: string[];
 		openAddCardModal: (player: string, playerCards: string[]) => void;
+		canAddCard: boolean;
 	}
 
-	const { playerName, hand, absentCards, openAddCardModal }: Props = $props();
+	const { playerName, hand, absentCards, canAddCard, openAddCardModal }: Props = $props();
 </script>
 
 <div class="w-full">
 	<div class="flex items-center justify-between">
 		<h2 class="text-2xl font-semibold text-white">{playerName.toUpperCase()}</h2>
 		<Button
+			disabled={!canAddCard}
 			color="light"
 			size="xs"
 			title={`Aggiungi una carta alla mano di ${playerName}`}

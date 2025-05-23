@@ -27,6 +27,7 @@
 			{playerName}
 			hand={game.getHand(playerName)}
 			absentCards={game.getAbsentCards(playerName)}
+			canAddCard={!game.isUpdating}
 			{openAddCardModal}
 		/>
 		{#if i < game.players.length - 1}
