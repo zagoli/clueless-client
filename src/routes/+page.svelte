@@ -9,7 +9,7 @@
 	let error = $state('');
 	const backendUp = async () => {
 		const res = await axios.get(`${API_BASE_URL}/ping`);
-		if (res.status !== 200 || res.data !== 'pong') {
+		if (res.data !== 'pong') {
 			throw new Error('Invalid response');
 		}
 	};

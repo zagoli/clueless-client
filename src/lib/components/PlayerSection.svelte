@@ -6,7 +6,7 @@
 		playerName: string;
 		hand: string[];
 		absentCards: string[];
-		openAddCardModal: (player: string, playerCards: string[]) => void;
+		openAddCardModal: (player: string) => void;
 		canAddCard: boolean;
 	}
 
@@ -23,7 +23,7 @@
 			title={`Aggiungi una carta alla mano di ${playerName}`}
 			aria-label={`Aggiungi una carta alla mano di ${playerName}`}
 			pill
-			onclick={() => openAddCardModal(playerName, hand)}
+			onclick={() => openAddCardModal(playerName)}
 		>
 			<PlusOutline size="xs" />
 		</Button>

@@ -7,7 +7,11 @@
 	import axios from 'axios';
 
 	const newGame = async () => {
-		const res = await axios.post(`${API_BASE_URL}/new_game`, { players: game.players.length });
+		const res = await axios.post(
+			`${API_BASE_URL}/new_game`,
+			{ players: game.players.length },
+			{ withCredentials: true }
+		);
 		if (res.status !== 201) {
 			throw new Error('Invalid response');
 		}

@@ -10,10 +10,21 @@ export type Hands = Record<string, string[]>;
 export type AbsentCards = Record<string, string[]>;
 export type Questions = Question[];
 
+interface GameDiff {
+    hands?: Hands;
+    absent_cards?: AbsentCards;
+}
+
+interface GameUpdate {
+    diff: GameDiff;
+    envelope: string[];
+}
+
 export class Game {
     #hands = $state<Hands>({});
     #absent_cards = $state<AbsentCards>({});
     #questions = $state<Questions>([]);
+    #envelope = $state<string[]>([]);
     #game_started = $state(false);
     #players = $state<string[]>([]);
     #isUpdating = $state(false);
@@ -57,6 +68,14 @@ export class Game {
         this.#isUpdating = value;
     }
 
+    get envelope() {
+        return this.#envelope;
+    }
+
+    addToEnvelope(cards: string[]) {
+        this.#envelope.push(...cards);
+    }
+
     addPlayer(player: string) {
         if (!this.#players.includes(player)) {
             this.#players.push(player);
@@ -76,6 +95,52 @@ export class Game {
         if (!this.#absent_cards[player].includes(card)) {
             this.#absent_cards[player].push(card);
         }
+    }
+
+    private updatePlayerHands(hands: Hands) {
+        for (const [playerIdx, cards] of Object.entries(hands)) {
+            const player = this.#players[parseInt(playerIdx)];
+            if (player) {
+                if (!this.#hands[player]) {
+                    this.#hands[player] = [];
+                }
+                this.#hands[player].push(...cards);
+            }
+        }
+    }
+
+    private updatePlayerAbsentCards(absentCards: AbsentCards) {
+        for (const [playerIdx, cards] of Object.entries(absentCards)) {
+            const player = this.#players[parseInt(playerIdx)];
+            if (player) {
+                if (!this.#absent_cards[player]) {
+                    this.#absent_cards[player] = [];
+                }
+                this.#absent_cards[player].push(...cards);
+            }
+        }
+    }
+
+    updateGame(update: GameUpdate) {
+        if (update.diff.hands) {
+            this.updatePlayerHands(update.diff.hands);
+        }
+
+        if (update.diff.absent_cards) {
+            this.updatePlayerAbsentCards(update.diff.absent_cards);
+        }
+
+        if (update.envelope) {
+            this.addToEnvelope(update.envelope);
+        }
+    }
+
+    getAllCardsInHands() {
+        const cards = [];
+        for (const hand of Object.values(this.#hands)) {
+            cards.push(...hand);
+        }
+        return cards;
     }
 }
 

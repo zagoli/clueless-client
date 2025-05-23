@@ -12,11 +12,9 @@
 
 	let addCardModalOpen = $state(false);
 	let addCardPlayer = $state('');
-	let addCardPlayerCards = $state<string[]>([]);
 
-	function openAddCardModal(player: string, playerCards: string[]) {
+	function openAddCardModal(player: string) {
 		addCardPlayer = player;
-		addCardPlayerCards = playerCards;
 		addCardModalOpen = true;
 	}
 </script>
@@ -36,8 +34,4 @@
 	{/each}
 </div>
 
-<AddCardModal
-	bind:open={addCardModalOpen}
-	player={addCardPlayer}
-	playerCards={addCardPlayerCards}
-/>
+<AddCardModal bind:open={addCardModalOpen} player={addCardPlayer} />
