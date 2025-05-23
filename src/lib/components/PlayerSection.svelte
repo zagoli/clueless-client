@@ -21,6 +21,7 @@
 			color="light"
 			size="xs"
 			title={`Aggiungi una carta alla mano di ${playerName}`}
+			aria-label={`Aggiungi una carta alla mano di ${playerName}`}
 			pill
 			onclick={() => openAddCardModal(playerName, hand)}
 		>

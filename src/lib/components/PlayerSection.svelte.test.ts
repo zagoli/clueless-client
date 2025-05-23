@@ -7,7 +7,9 @@ describe('PlayerSection Component', () => {
     const mockProps = {
         playerName: 'Luigi',
         hand: ['Pistola', 'Plum'],
-        absent_cards: ['Scarlet', 'Cucina']
+        absentCards: ['Scarlet', 'Cucina'],
+        canAddCard: true,
+        openAddCardModal: vi.fn()
     };
 
     it('should display player name in uppercase', () => {
@@ -33,10 +35,22 @@ describe('PlayerSection Component', () => {
         expect(screen.getByText('Carte assenti')).toBeTruthy();
     });
 
-    it('should display add card button', () => {
+    it('should handle add card button interaction', () => {
         render(PlayerSection, mockProps);
-        const addButton = screen.getByRole('button', { name: 'Aggiungi una carta' });
+        const addButton = screen.getByRole('button', {
+            name: `Aggiungi una carta alla mano di ${mockProps.playerName}`
+        });
         expect(addButton).toBeTruthy();
+        expect(addButton.getAttribute('disabled')).toBeFalsy();
+    });
+
+    it('should call openAddCardModal with correct parameters when add button is clicked', async () => {
+        render(PlayerSection, mockProps);
+        const addButton = screen.getByRole('button', {
+            name: `Aggiungi una carta alla mano di ${mockProps.playerName}`
+        });
+        addButton.click();
+        expect(mockProps.openAddCardModal).toHaveBeenCalledWith('Luigi', ['Pistola', 'Plum']);
     });
 
     it('should display empty hand section when no cards in hand', () => {
