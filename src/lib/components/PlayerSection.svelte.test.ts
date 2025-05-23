@@ -53,7 +53,7 @@ describe('PlayerSection Component', () => {
     it('should not display absent cards section when no absent cards', () => {
         render(PlayerSection, {
             ...mockProps,
-            absent_cards: []
+            absentCards: []
         });
         expect(screen.queryByText('Carte assenti')).toBeNull();
     });
