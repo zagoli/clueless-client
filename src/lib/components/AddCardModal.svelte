@@ -35,7 +35,11 @@
 <Modal bind:open title={`Aggiungi alla mano di ${player}`} autoclose size="sm">
 	<div class="cards-grid">
 		{#each choosableCards as card}
-			<Button color="alternative" onclick={() => handleAddCard(card)}>
+			<Button
+				color="alternative"
+				onclick={() => handleAddCard(card)}
+				data-testid={`add-card-${card}-button`}
+			>
 				{card}
 			</Button>
 		{/each}

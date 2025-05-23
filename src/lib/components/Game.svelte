@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Game } from '$lib/stores/game.svelte';
-	import { Hr } from 'flowbite-svelte';
+	import { Button, Hr } from 'flowbite-svelte';
 	import PlayerSection from './PlayerSection.svelte';
 	import AddCardModal from './AddCardModal.svelte';
 
@@ -20,6 +20,8 @@
 </script>
 
 <div class="w-full">
+	<Button class="w-full" disabled={game.isUpdating}>Aggiungi una domanda</Button>
+	<Hr />
 	{#each game.players as playerName, i}
 		<PlayerSection
 			{playerName}

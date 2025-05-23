@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div class="relative h-full w-full max-w-5xl px-4">
+<div class="h-full w-full max-w-5xl px-4">
 	{#if game.isStarted()}
 		<Tabs tabStyle="full">
 			<TabItem title="Partita" class="w-full" open>
@@ -28,14 +28,6 @@
 			<TabItem title="Domande" class="w-full">Lorem ipsum</TabItem>
 			<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
 		</Tabs>
-		<Button
-			pill
-			class="absolute end-6 bottom-6 p-4!"
-			title="Aggiungi una domanda"
-			disabled={game.isUpdating}
-		>
-			<PlusOutline class="h-6 w-6" />
-		</Button>
 	{:else}
 		{#await newGame()}
 			<div class="flex items-center justify-center p-6">

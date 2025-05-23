@@ -14,7 +14,7 @@
 </script>
 
 <div class="w-full">
-	<div class="flex items-center justify-between">
+	<div class="flex items-start justify-between">
 		<h2 class="text-2xl font-semibold text-white">{playerName.toUpperCase()}</h2>
 		<Button
 			disabled={!canAddCard}
@@ -38,14 +38,12 @@
 		</div>
 	</div>
 
-	{#if absentCards.length > 0}
-		<div class="mt-4">
-			<h3 class="font-medium">Carte assenti</h3>
-			<div class="flex flex-wrap gap-2 py-2">
-				{#each absentCards as card}
-					<Badge color="red">{card}</Badge>
-				{/each}
-			</div>
+	<div class="mt-4">
+		<h3 class="font-medium">Carte assenti</h3>
+		<div class="flex flex-wrap gap-2 py-2">
+			{#each absentCards as card}
+				<Badge color="red">{card}</Badge>
+			{/each}
 		</div>
-	{/if}
+	</div>
 </div>
