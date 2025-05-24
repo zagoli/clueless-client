@@ -25,6 +25,38 @@ describe('Game Store', () => {
             expect(game.isStarted()).toBe(false);
             expect(game.players).toEqual([]);
         });
+
+        it('should handle isUpdating state', () => {
+            expect(game.isUpdating).toBe(false);
+            game.isUpdating = true;
+            expect(game.isUpdating).toBe(true);
+            game.reset();
+            expect(game.isUpdating).toBe(false);
+        });
+
+        it('should handle lastAskedByPlayer state', () => {
+            expect(game.lastAskedByPlayer).toBe('');
+            game.lastAskedByPlayer = 'Mario';
+            expect(game.lastAskedByPlayer).toBe('Mario');
+            game.reset();
+            expect(game.lastAskedByPlayer).toBe('');
+        });
+
+        it('should handle lastAskedByPlayer state with validation', () => {
+            game.addPlayer('Mario');
+
+            // Should set valid player
+            game.lastAskedByPlayer = 'Mario';
+            expect(game.lastAskedByPlayer).toBe('Mario');
+
+            // Should not set invalid player
+            game.lastAskedByPlayer = 'Luigi';
+            expect(game.lastAskedByPlayer).toBe('Mario');
+
+            // Should allow empty string
+            game.lastAskedByPlayer = '';
+            expect(game.lastAskedByPlayer).toBe('');
+        });
     });
 
     describe('Player Management', () => {
@@ -68,6 +100,17 @@ describe('Game Store', () => {
 
         it('should add cards to envelope', () => {
             game.addToEnvelope(['Candlestick', 'Library']);
+            expect(game.envelope).toEqual(['Candlestick', 'Library']);
+        });
+
+        it('should handle empty envelope additions', () => {
+            game.addToEnvelope([]);
+            expect(game.envelope).toEqual([]);
+        });
+
+        it('should concatenate multiple envelope additions', () => {
+            game.addToEnvelope(['Candlestick']);
+            game.addToEnvelope(['Library']);
             expect(game.envelope).toEqual(['Candlestick', 'Library']);
         });
     });
@@ -117,6 +160,34 @@ describe('Game Store', () => {
 
             game.updateGame(update);
             expect(game.envelope).toEqual(['Candlestick', 'Library']);
+        });
+
+        it('should handle empty updates', () => {
+            const update = {
+                diff: {},
+                envelope: []
+            };
+            game.updateGame(update);
+            expect(game.getHand('Mario')).toEqual([]);
+            expect(game.getAbsentCards('Mario')).toEqual([]);
+            expect(game.envelope).toEqual([]);
+        });
+
+        it('should handle updates with invalid player indices', () => {
+            const update = {
+                diff: {
+                    hands: {
+                        '99': ['Candlestick']
+                    },
+                    absent_cards: {
+                        '99': ['Library']
+                    }
+                },
+                envelope: []
+            };
+            game.updateGame(update);
+            expect(game.getAllCardsInHands()).toEqual([]);
+            expect(Object.values(game.getAbsentCards('Mario'))).toEqual([]);
         });
     });
 

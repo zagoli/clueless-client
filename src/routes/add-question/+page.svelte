@@ -4,13 +4,13 @@
 	import { game } from '$lib/stores/game.svelte';
 	import { goto } from '$app/navigation';
 
-	const NOBODY = Symbol('NOBODY');
+	const NOBODY = -1;
 
 	let askedBy = $state('');
 	let suspect = $state('');
 	let weapon = $state('');
 	let room = $state('');
-	let respondedBy = $state<string | symbol>('');
+	let respondedBy = $state<string | number>('');
 
 	function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -20,7 +20,7 @@
 
 <div class="w-full max-w-md">
 	<Card class="mx-auto p-6">
-		<h2 class="mb-4 text-center text-2xl font-bold dark:text-white">Aggiungi una domanda</h2>
+		<h2 class="mb-6 text-center text-2xl font-bold dark:text-white">Aggiungi una domanda</h2>
 		<form class="flex flex-col gap-4" onsubmit={handleSubmit}>
 			<div>
 				<Label for="askedBy">Chi fa la domanda</Label>

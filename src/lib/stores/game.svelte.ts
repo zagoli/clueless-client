@@ -28,6 +28,7 @@ export class Game {
     #game_started = $state(false);
     #players = $state<string[]>([]);
     #isUpdating = $state(false);
+    #lastAskedByPlayer = $state<string>('');
 
     start() {
         this.#game_started = true;
@@ -40,6 +41,8 @@ export class Game {
         this.#questions = [];
         this.#players = [];
         this.#isUpdating = false;
+        this.#envelope = [];
+        this.#lastAskedByPlayer = '';
     }
 
     isStarted() {
@@ -66,6 +69,16 @@ export class Game {
 
     set isUpdating(value: boolean) {
         this.#isUpdating = value;
+    }
+
+    get lastAskedByPlayer() {
+        return this.#lastAskedByPlayer;
+    }
+
+    set lastAskedByPlayer(value: string) {
+        if (value === '' || this.#players.includes(value)) {
+            this.#lastAskedByPlayer = value;
+        }
     }
 
     get envelope() {
