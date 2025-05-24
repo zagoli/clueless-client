@@ -12,8 +12,6 @@
 	async function handleAddCard(card: string) {
 		game.isUpdating = true;
 		const playerIdx = game.players.indexOf(player);
-		if (playerIdx === -1) return;
-
 		try {
 			const response = await axios.post(
 				`${API_BASE_URL}/add_card`,

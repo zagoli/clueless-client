@@ -3,6 +3,8 @@
 	import { suspects, weapons, rooms } from '$lib/stores/cards';
 	import { game } from '$lib/stores/game.svelte';
 	import { goto } from '$app/navigation';
+	import axios from 'axios';
+	import { API_BASE_URL } from '$lib/config';
 
 	const NOBODY = -1;
 
@@ -12,11 +14,30 @@
 	let suspect = $state('');
 	let weapon = $state('');
 	let room = $state('');
-	let respondedBy = $state<string | number>('');
+	let answeredBy = $state<string | number>('');
 
-	function handleSubmit(event: Event) {
+	async function handleSubmit(event: Event) {
 		event.preventDefault();
-		game.lastAskedByPlayer = askedBy;
+		const askebByIdx = game.players.indexOf(askedBy);
+		const answeredByIdx =
+			typeof answeredBy === 'number' ? answeredBy : game.players.indexOf(answeredBy);
+		game.isUpdating = true;
+		try {
+			const response = await axios.post(
+				`${API_BASE_URL}/add_question`,
+				{ asked_by: askebByIdx, answered_by: answeredByIdx, cards: [suspect, weapon, room] },
+				{ withCredentials: true }
+			);
+
+			if (response.data) {
+				game.updateGame(response.data);
+				game.lastAskedByPlayer = askedBy;
+			}
+		} catch (_) {
+			alert('Errore, non ho aggiunto la domanda');
+		} finally {
+			game.isUpdating = false;
+		}
 		goto('/game');
 	}
 </script>
@@ -65,7 +86,7 @@
 				<Label for="respondedBy">Chi ha risposto</Label>
 				<Select
 					id="respondedBy"
-					bind:value={respondedBy}
+					bind:value={answeredBy}
 					required
 					placeholder="Seleziona un giocatore"
 				>
@@ -76,7 +97,12 @@
 				</Select>
 			</div>
 
-			<Button type="submit" class="mt-4">Aggiungi</Button>
+			<div class="flex gap-4">
+				<Button type="button" class="flex-1" color="alternative" onclick={() => goto('/game')}
+					>Annulla</Button
+				>
+				<Button type="submit" class="flex-1" disabled={game.isUpdating}>Aggiungi</Button>
+			</div>
 		</form>
 	</Card>
 </div>
