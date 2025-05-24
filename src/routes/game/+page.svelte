@@ -20,7 +20,7 @@
 
 <div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
-		<Tabs tabStyle="full" class="mx-auto ">
+		<Tabs tabStyle="full" class="mx-auto">
 			<TabItem title="Partita" class="w-full" open>
 				<Game {game} />
 			</TabItem>

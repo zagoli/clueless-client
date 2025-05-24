@@ -6,7 +6,9 @@
 
 	const NOBODY = -1;
 
-	let askedBy = $state('');
+	let askedBy = $derived(
+		game.players[(game.players.indexOf(game.lastAskedByPlayer) + 1) % game.players.length]
+	);
 	let suspect = $state('');
 	let weapon = $state('');
 	let room = $state('');
@@ -14,6 +16,7 @@
 
 	function handleSubmit(event: Event) {
 		event.preventDefault();
+		game.lastAskedByPlayer = askedBy;
 		goto('/game');
 	}
 </script>
