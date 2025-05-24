@@ -5,6 +5,7 @@
 	import Game from '$lib/components/Game.svelte';
 	import axios from 'axios';
 	import Questions from '$lib/components/Questions.svelte';
+	import Suggestions from '$lib/components/Suggestions.svelte';
 
 	const newGame = async () => {
 		const res = await axios.post(
@@ -28,7 +29,9 @@
 			<TabItem title="Domande" class="w-full">
 				<Questions questions={game.questions} />
 			</TabItem>
-			<TabItem title="Suggerimenti" class="w-full">Lorem ipsum</TabItem>
+			<TabItem title="Suggerimenti" class="w-full">
+				<Suggestions envelope={game.envelope} />
+			</TabItem>
 		</Tabs>
 	{:else}
 		{#await newGame()}
