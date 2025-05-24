@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Badge, Button } from 'flowbite-svelte';
 	import { PlusOutline } from 'flowbite-svelte-icons';
+	import { scale } from 'svelte/transition';
 
 	interface Props {
 		playerName: string;
@@ -33,7 +34,9 @@
 		<h3 class="font-medium">Carte in mano</h3>
 		<div class="flex flex-wrap gap-2 py-2">
 			{#each hand as card}
-				<Badge color="green">{card}</Badge>
+				<div transition:scale={{ duration: 500 }}>
+					<Badge color="green">{card}</Badge>
+				</div>
 			{/each}
 		</div>
 	</div>
@@ -42,7 +45,9 @@
 		<h3 class="font-medium">Carte assenti</h3>
 		<div class="flex flex-wrap gap-2 py-2">
 			{#each absentCards as card}
-				<Badge color="red">{card}</Badge>
+				<div transition:scale={{ duration: 500 }}>
+					<Badge color="red">{card}</Badge>
+				</div>
 			{/each}
 		</div>
 	</div>
