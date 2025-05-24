@@ -22,10 +22,10 @@
 		<Badge large color={envelope[0] ? 'green' : 'gray'}>
 			{envelope[0] ?? '?'}
 		</Badge>
-		<Badge large color={envelope[0] ? 'green' : 'gray'}>
+		<Badge large color={envelope[1] ? 'green' : 'gray'}>
 			{envelope[1] ?? '?'}
 		</Badge>
-		<Badge large color={envelope[0] ? 'green' : 'gray'}>
+		<Badge large color={envelope[2] ? 'green' : 'gray'}>
 			{envelope[2] ?? '?'}
 		</Badge>
 	</div>
