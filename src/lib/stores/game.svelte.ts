@@ -1,6 +1,6 @@
 export interface Question {
-    asked_by: string;
-    responded_by: string;
+    askedBy: string;
+    answeredBy: string;
     suspect: string;
     weapon: string;
     room: string;
@@ -154,6 +154,14 @@ export class Game {
             cards.push(...hand);
         }
         return cards;
+    }
+
+    addQuestion(question: Question) {
+        this.#questions.push(question);
+    }
+
+    get questions() {
+        return this.#questions;
     }
 }
 

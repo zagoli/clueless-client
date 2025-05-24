@@ -14,7 +14,7 @@
 	let suspect = $state('');
 	let weapon = $state('');
 	let room = $state('');
-	let answeredBy = $state<string | number>('');
+	let answeredBy = $state<string | typeof NOBODY>('');
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -32,6 +32,13 @@
 			if (response.data) {
 				game.updateGame(response.data);
 				game.lastAskedByPlayer = askedBy;
+				game.addQuestion({
+					askedBy,
+					suspect,
+					weapon,
+					room,
+					answeredBy: answeredBy === NOBODY ? 'Nessuno' : answeredBy
+				});
 			}
 		} catch (_) {
 			alert('Errore, non ho aggiunto la domanda');

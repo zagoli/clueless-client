@@ -34,7 +34,7 @@
 		</h2>
 		<p class="mt-2 mb-4 text-sm">
 			Aggiungi i giocatori partendo da quello seduto alla tua sinistra, e proseguendo in senso
-			antiorario.
+			orario.
 		</p>
 		<form
 			onsubmit={(e) => {
