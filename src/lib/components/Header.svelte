@@ -14,7 +14,10 @@
 
 <header class="border-b p-4">
 	<div class="mx-auto flex max-w-6xl items-center justify-between">
-		<h1 class="text-2xl font-bold dark:text-white">Clueless</h1>
+		<div class="flex items-center gap-2">
+			<h1 class="text-2xl font-bold dark:text-white">Clueless</h1>
+			<img src="/icon.svg" alt="Clueless icon" class="h-8 w-8" />
+		</div>
 		<Button
 			color="light"
 			type="button"
