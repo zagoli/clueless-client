@@ -28,7 +28,7 @@
 </script>
 
 <div class="w-full max-w-md">
-	<Card class="p-6">
+	<Card class="mx-auto p-6 ">
 		<h2 class="mb-4 text-center text-2xl font-bold dark:text-white">
 			Aggiungi gli altri giocatori
 		</h2>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner, Button } from 'flowbite-svelte';
-	import { PlusOutline } from 'flowbite-svelte-icons';
 	import { game } from '$lib/stores/game.svelte';
 	import Game from '$lib/components/Game.svelte';
 	import axios from 'axios';
@@ -19,9 +18,9 @@
 	};
 </script>
 
-<div class="h-full w-full max-w-5xl px-4">
+<div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
-		<Tabs tabStyle="full">
+		<Tabs tabStyle="full" class="mx-auto ">
 			<TabItem title="Partita" class="w-full" open>
 				<Game {game} />
 			</TabItem>

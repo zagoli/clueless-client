@@ -27,11 +27,11 @@
 
 <div class="w-full max-w-md">
 	{#await backendUp()}
-		<div class="flex items-center justify-center p-6">
+		<div class="mx-auto flex items-center justify-center p-6">
 			<Spinner size="8" />
 		</div>
 	{:then _}
-		<Card class="p-6 text-center">
+		<Card class="mx-auto p-6 text-center ">
 			<h2 class="mb-4 text-2xl font-bold dark:text-white">Iniziamo!</h2>
 			<form
 				onsubmit={(e) => {
