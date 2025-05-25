@@ -22,6 +22,7 @@ interface GameUpdate {
 
 export class Game {
     #hands = $state<Hands>({});
+    #userAddedCards = $state<string[]>([]);
     #absent_cards = $state<AbsentCards>({});
     #questions = $state<Questions>([]);
     #envelope = $state<string[]>([]);
@@ -43,6 +44,7 @@ export class Game {
         this.#isUpdating = false;
         this.#envelope = [];
         this.#lastAskedByPlayer = '';
+        this.#userAddedCards = [];
     }
 
     isStarted() {
@@ -57,6 +59,14 @@ export class Game {
     getAbsentCards(player: string) {
         const absent_cards = this.#absent_cards[player];
         return absent_cards ? absent_cards : [];
+    }
+
+    get userAddedCards() {
+        return this.#userAddedCards;
+    }
+
+    addCardToUserAddedCards(card: string) {
+        this.#userAddedCards.push(card);
     }
 
     get players() {
@@ -113,24 +123,20 @@ export class Game {
     private updatePlayerHands(hands: Hands) {
         for (const [playerIdx, cards] of Object.entries(hands)) {
             const player = this.#players[parseInt(playerIdx)];
-            if (player) {
-                if (!this.#hands[player]) {
-                    this.#hands[player] = [];
-                }
-                this.#hands[player].push(...cards);
+            if (!this.#hands[player]) {
+                this.#hands[player] = [];
             }
+            this.#hands[player].push(...cards);
         }
     }
 
     private updatePlayerAbsentCards(absentCards: AbsentCards) {
         for (const [playerIdx, cards] of Object.entries(absentCards)) {
             const player = this.#players[parseInt(playerIdx)];
-            if (player) {
-                if (!this.#absent_cards[player]) {
-                    this.#absent_cards[player] = [];
-                }
-                this.#absent_cards[player].push(...cards);
+            if (!this.#absent_cards[player]) {
+                this.#absent_cards[player] = [];
             }
+            this.#absent_cards[player].push(...cards);
         }
     }
 

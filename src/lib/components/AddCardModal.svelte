@@ -21,6 +21,7 @@
 
 			if (response.data) {
 				game.updateGame(response.data);
+				game.addCardToUserAddedCards(card);
 			}
 		} catch (_) {
 			alert('Errore, non ho aggiunto la carta');

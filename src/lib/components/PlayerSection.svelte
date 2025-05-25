@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { game } from '$lib/stores/game.svelte';
 	import { Badge, Button } from 'flowbite-svelte';
 	import { PlusOutline } from 'flowbite-svelte-icons';
 	import { scale } from 'svelte/transition';
@@ -35,7 +36,7 @@
 		<div class="flex flex-wrap gap-2 py-2">
 			{#each hand as card}
 				<div transition:scale={{ duration: 500 }}>
-					<Badge color="green">{card}</Badge>
+					<Badge color="lime" border={!game.userAddedCards.includes(card)}>{card}</Badge>
 				</div>
 			{/each}
 		</div>
