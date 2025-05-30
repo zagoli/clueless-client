@@ -1,38 +1,31 @@
-# sv
+# Clueless Client
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A front-end web application for Clueless, a Clue board game companion. Built with SvelteKit and TypeScript.
 
-## Creating a project
+Live at [clueless.zagoli.com](https://clueless.zagoli.com).
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Local Development Setup
 
-```bash
-# create a new project in the current directory
-npx sv create
+### Prerequisites:
 
-# create a new project in my-app
-npx sv create my-app
-```
+- Node.js 18 or higher
+- npm, pnpm, or yarn
+- Running instance of the Clueless backend server
 
-## Developing
+### Setup Steps:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. Clone the repository.
 
-```bash
-npm run dev
+2. Install dependencies.
+   ```bash
+   npm install
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+3. Make sure the [backend server](https://github.com/zagoli/clueless) is running locally.
 
-## Building
+4. Start the development server.
+   ```bash
+   npm run dev
+   ```
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+5. Enjoy!
