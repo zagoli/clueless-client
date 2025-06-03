@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Badge, Button } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 	import { PlusOutline } from 'flowbite-svelte-icons';
-	import { scale } from 'svelte/transition';
+	import CardList from './CardList.svelte';
 
 	interface Props {
 		playerName: string;
@@ -32,23 +32,11 @@
 
 	<div class="mt-4">
 		<h3 class="font-medium">Carte in mano</h3>
-		<div class="flex flex-wrap gap-2 py-2">
-			{#each hand as card}
-				<div transition:scale={{ duration: 500 }}>
-					<Badge color="green">{card}</Badge>
-				</div>
-			{/each}
-		</div>
+		<CardList cards={hand} color="green" />
 	</div>
 
 	<div class="mt-4">
 		<h3 class="font-medium">Carte assenti</h3>
-		<div class="flex flex-wrap gap-2 py-2">
-			{#each absentCards as card}
-				<div transition:scale={{ duration: 500 }}>
-					<Badge color="red">{card}</Badge>
-				</div>
-			{/each}
-		</div>
+		<CardList cards={absentCards} color="red" />
 	</div>
 </div>

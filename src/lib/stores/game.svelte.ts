@@ -13,6 +13,7 @@ export type Questions = Question[];
 interface GameDiff {
     hands?: Hands;
     absent_cards?: AbsentCards;
+    revealed_cards?: string[];
 }
 
 interface GameUpdate {
@@ -22,31 +23,33 @@ interface GameUpdate {
 
 export class Game {
     #hands = $state<Hands>({});
-    #absent_cards = $state<AbsentCards>({});
+    #absentCards = $state<AbsentCards>({});
     #questions = $state<Questions>([]);
     #envelope = $state<string[]>([]);
-    #game_started = $state(false);
+    #revealedCards = $state<string[]>([]);
+    #isGameStarted = $state(false);
     #players = $state<string[]>([]);
     #isUpdating = $state(false);
     #lastAskedByPlayer = $state<string>('');
 
     start() {
-        this.#game_started = true;
+        this.#isGameStarted = true;
     }
 
     reset() {
-        this.#game_started = false;
+        this.#isGameStarted = false;
         this.#hands = {};
-        this.#absent_cards = {};
+        this.#absentCards = {};
         this.#questions = [];
         this.#players = [];
         this.#isUpdating = false;
         this.#envelope = [];
         this.#lastAskedByPlayer = '';
+        this.#revealedCards = [];
     }
 
     isStarted() {
-        return this.#game_started;
+        return this.#isGameStarted;
     }
 
     getHand(player: string) {
@@ -55,7 +58,7 @@ export class Game {
     }
 
     getAbsentCards(player: string) {
-        const absent_cards = this.#absent_cards[player];
+        const absent_cards = this.#absentCards[player];
         return absent_cards ? absent_cards : [];
     }
 
@@ -73,6 +76,10 @@ export class Game {
 
     get lastAskedByPlayer() {
         return this.#lastAskedByPlayer;
+    }
+
+    get revealedCards() {
+        return this.#revealedCards;
     }
 
     set lastAskedByPlayer(value: string) {
@@ -102,11 +109,39 @@ export class Game {
     }
 
     addAbsentCard(player: string, card: string) {
-        if (!this.#absent_cards[player]) {
-            this.#absent_cards[player] = [];
+        if (!this.#absentCards[player]) {
+            this.#absentCards[player] = [];
         }
-        if (!this.#absent_cards[player].includes(card)) {
-            this.#absent_cards[player].push(card);
+        if (!this.#absentCards[player].includes(card)) {
+            this.#absentCards[player].push(card);
+        }
+    }
+
+    revealCard(card: string) {
+        this.#revealedCards.push(card);
+    }
+
+    updateGame(update: GameUpdate) {
+        if (update.diff.hands) {
+            this.updatePlayerHands(update.diff.hands);
+        }
+
+        if (update.diff.absent_cards) {
+            this.updatePlayerAbsentCards(update.diff.absent_cards);
+        }
+
+        if (update.diff.revealed_cards) {
+            this.updateRevealedCards(update.diff.revealed_cards);
+        }
+
+        if (update.envelope) {
+            this.addToEnvelope(update.envelope);
+        }
+    }
+
+    private updateRevealedCards(revealed_cards: string[]) {
+        for (const card of revealed_cards) {
+            this.revealCard(card);
         }
     }
 
@@ -126,25 +161,11 @@ export class Game {
         for (const [playerIdx, cards] of Object.entries(absentCards)) {
             const player = this.#players[parseInt(playerIdx)];
             if (player) {
-                if (!this.#absent_cards[player]) {
-                    this.#absent_cards[player] = [];
+                if (!this.#absentCards[player]) {
+                    this.#absentCards[player] = [];
                 }
-                this.#absent_cards[player].push(...cards);
+                this.#absentCards[player].push(...cards);
             }
-        }
-    }
-
-    updateGame(update: GameUpdate) {
-        if (update.diff.hands) {
-            this.updatePlayerHands(update.diff.hands);
-        }
-
-        if (update.diff.absent_cards) {
-            this.updatePlayerAbsentCards(update.diff.absent_cards);
-        }
-
-        if (update.envelope) {
-            this.addToEnvelope(update.envelope);
         }
     }
 
