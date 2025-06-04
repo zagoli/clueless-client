@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { game, type Question } from '$lib/stores/game.svelte';
+	import { game, type Question } from '$lib/model/game.svelte';
 	import { Card } from 'flowbite-svelte';
 
 	interface Props {

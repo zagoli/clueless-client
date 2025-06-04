@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { cards } from '$lib/stores/cards';
-	import { game } from '$lib/stores/game.svelte';
+	import { cards } from '$lib/model/cards';
+	import { game } from '$lib/model/game.svelte';
 	import { Modal } from 'flowbite-svelte';
 	import CardsButtonGrid from './CardsButtonGrid.svelte';
 	import { API_BASE_URL } from '$lib/config';

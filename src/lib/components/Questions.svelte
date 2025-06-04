@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Question, Questions } from '$lib/stores/game.svelte';
+	import type { Question, Questions } from '$lib/model/game.svelte';
 	import { Button } from 'flowbite-svelte';
 	import { flip } from 'svelte/animate';
 	import QuestionCard from './QuestionCard.svelte';

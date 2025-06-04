@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, Select, Label } from 'flowbite-svelte';
-	import { suspects, weapons, rooms } from '$lib/stores/cards';
-	import { game } from '$lib/stores/game.svelte';
+	import { suspects, weapons, rooms } from '$lib/model/cards';
+	import { game } from '$lib/model/game.svelte';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
 	import { API_BASE_URL } from '$lib/config';

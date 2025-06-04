@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Game } from '$lib/stores/game.svelte';
+	import type { Game } from '$lib/model/game.svelte';
 	import { Button, Hr } from 'flowbite-svelte';
 	import PlayerSection from './PlayerSection.svelte';
 	import AddCardModal from './AddCardModal.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Modal } from 'flowbite-svelte';
-	import { cards } from '$lib/stores/cards';
-	import { game } from '$lib/stores/game.svelte';
+	import { cards } from '$lib/model/cards';
+	import { game } from '$lib/model/game.svelte';
 	import axios from 'axios';
 	import { API_BASE_URL } from '$lib/config';
 	import CardsButtonGrid from './CardsButtonGrid.svelte';

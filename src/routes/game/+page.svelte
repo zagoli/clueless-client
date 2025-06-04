@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner, Button } from 'flowbite-svelte';
-	import { game } from '$lib/stores/game.svelte';
+	import { game } from '$lib/model/game.svelte';
 	import Game from '$lib/components/Game.svelte';
 	import axios from 'axios';
 	import Questions from '$lib/components/Questions.svelte';
