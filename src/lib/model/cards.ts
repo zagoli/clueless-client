@@ -11,3 +11,7 @@ export const suspects = cardsByCategory.suspects;
 export const weapons = cardsByCategory.weapons;
 
 export const cards = suspects.concat(weapons, rooms);
+
+export function isCardInOneOrMoreCategory(card: string, categories: CardCategory[]): boolean {
+    return categories.some(category => cardsByCategory[category].includes(card));
+}

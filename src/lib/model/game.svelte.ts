@@ -1,3 +1,5 @@
+import { cardsByCategory, type CardCategory } from "./cards";
+
 export interface Question {
     askedBy: string;
     answeredBy: string;
@@ -92,10 +94,6 @@ export class Game {
         return this.#envelope;
     }
 
-    addToEnvelope(cards: string[]) {
-        this.#envelope.push(...cards);
-    }
-
     addPlayer(player: string) {
         if (!this.#players.includes(player)) {
             this.#players.push(player);
@@ -117,10 +115,6 @@ export class Game {
         }
     }
 
-    revealCard(card: string) {
-        this.#revealedCards.push(card);
-    }
-
     updateGame(update: GameUpdate) {
         if (update.diff.hands) {
             this.updatePlayerHands(update.diff.hands);
@@ -135,13 +129,13 @@ export class Game {
         }
 
         if (update.envelope) {
-            this.addToEnvelope(update.envelope);
+            this.updateEnvelope(update.envelope);
         }
     }
 
     private updateRevealedCards(revealed_cards: string[]) {
         for (const card of revealed_cards) {
-            this.revealCard(card);
+            this.#revealedCards.push(card);
         }
     }
 
@@ -169,6 +163,10 @@ export class Game {
         }
     }
 
+    private updateEnvelope(cards: string[]) {
+        this.#envelope = cards;
+    }
+
     getAllCardsInHands() {
         const cards = [];
         for (const hand of Object.values(this.#hands)) {
@@ -183,6 +181,16 @@ export class Game {
 
     get questions() {
         return this.#questions;
+    }
+
+    discoveredCardCategories(): CardCategory[] {
+        const categories = [];
+        for (const [category, cards] of Object.entries(cardsByCategory)) {
+            if (this.#envelope.some(card => cards.includes(card))) {
+                categories.push(category);
+            }
+        }
+        return categories as CardCategory[];
     }
 }
 

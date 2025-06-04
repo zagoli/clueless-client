@@ -1,19 +1,29 @@
 <script lang="ts">
 	import { API_BASE_URL } from '$lib/config';
+	import { isCardInOneOrMoreCategory } from '$lib/model/cards';
+	import { game } from '$lib/model/game.svelte';
 	import axios from 'axios';
 	import { Badge, Listgroup, ListgroupItem, Spinner } from 'flowbite-svelte';
 
 	interface Props {
 		envelope: string[];
 	}
+
 	const { envelope }: Props = $props();
+
 	const suggestions = async () => {
 		const res = await axios.get(`${API_BASE_URL}/suggestions`, { withCredentials: true });
-		const cardsSuspectScore = Object.entries(res.data.cards_suspect_score).sort(
-			([, scoreA], [, scoreB]) => (scoreB as number) - (scoreA as number)
-		);
+		const cardsSuspectScore = Object.entries(res.data.cards_suspect_score)
+			.sort(([, scoreA], [, scoreB]) => (scoreB as number) - (scoreA as number))
+			.filter((suggestion) => isSuggestionCategoryNotDiscovered(suggestion));
 		return cardsSuspectScore;
 	};
+
+	function isSuggestionCategoryNotDiscovered(suggestion: [string, unknown]): boolean {
+		const discoveredCategories = game.discoveredCardCategories();
+		const [card, _] = suggestion;
+		return !isCardInOneOrMoreCategory(card, discoveredCategories);
+	}
 </script>
 
 <div class="w-full">
