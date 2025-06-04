@@ -1,14 +1,14 @@
 export type CardCategory = "rooms" | "suspects" | "weapons";
 
 export const cardsByCategory: Record<CardCategory, string[]> = {
-    rooms: ["Ingresso", "Sala del biliardo", "Cucina", "Sala da pranzo", "Soggiorno", "Camera da letto", "Studio", "Stanza da bagno", "Garage"],
-    suspects: ["Plum", "Scarlet", "Green", "Mustard", "Peacock", "White"],
-    weapons: ["Pistola", "Candeliere", "Corda", "Tubo di piombo", "Chiave inglese"]
+    suspects: ["Green", "Mustard", "Peacock", "Plum", "Scarlet", "White"],
+    weapons: ["Chiave inglese", "Candeliere", "Pugnale", "Pistola", "Tubo di piombo", "Corda"],
+    rooms: ["Stanza da bagno", "Studio", "Sala da pranzo", "Sala del biliardo", "Garage", "Camera da letto", "Cucina", "Soggiorno", "Ingresso"],
 }
 
-export const rooms = cardsByCategory.rooms;
 export const suspects = cardsByCategory.suspects;
 export const weapons = cardsByCategory.weapons;
+export const rooms = cardsByCategory.rooms;
 
 export const cards = suspects.concat(weapons, rooms);
 
