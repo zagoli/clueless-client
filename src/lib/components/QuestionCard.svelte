@@ -17,7 +17,7 @@
 	}
 </script>
 
-<Card class="mb-2 grid grid-cols-5 py-2 text-center">
+<Card class="mb-2 grid grid-cols-5 py-2 text-center" horizontal size="xl">
 	<span class="text-xs">{question.askedBy}</span>
 	<span class={getClass(question.suspect)}>{question.suspect}</span>
 	<span class={getClass(question.weapon)}>{question.weapon}</span>

@@ -27,11 +27,7 @@
 	}
 </script>
 
-<Table shadow>
-	<TableHead>
-		<TableHeadCell>Carta</TableHeadCell>
-		<TableHeadCell>Posizione</TableHeadCell>
-	</TableHead>
+<Table>
 	<TableBody>
 		{#each cards as card}
 			<TableBodyRow>
