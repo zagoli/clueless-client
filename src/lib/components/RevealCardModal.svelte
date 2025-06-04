@@ -8,9 +8,10 @@
 
 	let { open = $bindable() } = $props();
 
-	const allCardsInHands = $derived(game.getAllCardsInHands());
 	const choosableCards = $derived(
-		cards.filter((card) => !allCardsInHands.includes(card) && !game.revealedCards.includes(card))
+		cards.filter(
+			(card) => !game.getAllCardsInHands().includes(card) && !game.revealedCards.includes(card)
+		)
 	);
 
 	async function handleRevealCard(card: string) {
