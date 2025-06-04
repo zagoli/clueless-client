@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { API_BASE_URL } from '$lib/config';
-	import { TabItem, Tabs, Spinner, Button } from 'flowbite-svelte';
+	import { TabItem, Tabs, Spinner } from 'flowbite-svelte';
 	import { game } from '$lib/model/game.svelte';
-	import Game from '$lib/components/Game.svelte';
+	import Players from '$lib/components/Players.svelte';
 	import axios from 'axios';
 	import Questions from '$lib/components/Questions.svelte';
 	import Suggestions from '$lib/components/Suggestions.svelte';
@@ -23,8 +23,8 @@
 <div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
 		<Tabs tabStyle="full" class="mx-auto">
-			<TabItem title="Partita" class="w-full" open>
-				<Game {game} />
+			<TabItem title="Giocatori" class="w-full" open>
+				<Players {game} />
 			</TabItem>
 			<TabItem title="Domande" class="w-full">
 				<Questions questions={game.questions} />
