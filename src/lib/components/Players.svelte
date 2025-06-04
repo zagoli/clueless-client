@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { Game } from '$lib/model/game.svelte';
-	import { Button, Hr } from 'flowbite-svelte';
+	import { Hr } from 'flowbite-svelte';
 	import PlayerSection from './PlayerSection.svelte';
 	import AddCardModal from './AddCardModal.svelte';
-	import { goto } from '$app/navigation';
 	import RevealedCards from './RevealedCards.svelte';
 	import RevealCardModal from './RevealCardModal.svelte';
 
@@ -28,11 +27,6 @@
 	}
 </script>
 
-<Button class="w-full" disabled={game.isUpdating} onclick={() => goto('/add-question')}
-	>Aggiungi una domanda</Button
->
-
-<Hr />
 <RevealedCards
 	revealedCards={game.revealedCards}
 	canRevealCard={!game.isUpdating}

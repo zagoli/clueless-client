@@ -24,8 +24,6 @@
 	{#if revealedCards.length > 0}
 		<CardList cards={revealedCards} color="green" />
 	{:else}
-		<p class="my-2 text-sm">
-			Le carte rivelate sono quelle che non sono state distribuite e che tutti possono vedere!
-		</p>
+		<p class="mt-2 text-sm">Sono le carte che vengono mostrate a tutti all'inizio della partita!</p>
 	{/if}
 </div>

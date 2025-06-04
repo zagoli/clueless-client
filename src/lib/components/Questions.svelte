@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { Question, Questions } from '$lib/model/game.svelte';
-	import { Button } from 'flowbite-svelte';
+	import { game, type Question, type Questions } from '$lib/model/game.svelte';
+	import { Button, Hr } from 'flowbite-svelte';
 	import { flip } from 'svelte/animate';
 	import QuestionCard from './QuestionCard.svelte';
+	import { goto } from '$app/navigation';
 
 	interface Props {
 		questions: Questions;
@@ -29,6 +30,11 @@
 		})
 	);
 </script>
+
+<Button class="w-full" disabled={game.isUpdating} onclick={() => goto('/add-question')}
+	>Aggiungi una domanda</Button
+>
+<Hr />
 
 {#if questions.length === 0}
 	<p>Non hai inserito nessuna domanda.</p>
