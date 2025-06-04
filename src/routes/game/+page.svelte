@@ -23,7 +23,7 @@
 
 <div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
-		<Tabs>
+		<Tabs tabStyle="pill">
 			<TabItem title="Giocatori" class="w-full" open>
 				<Players {game} />
 			</TabItem>
