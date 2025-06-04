@@ -1,15 +1,7 @@
 <script lang="ts">
 	import { cards } from '$lib/model/cards';
 	import type { Game } from '$lib/model/game.svelte';
-	import {
-		Badge,
-		Table,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		TableHead,
-		TableHeadCell
-	} from 'flowbite-svelte';
+	import { Badge, Table, TableBody, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
 
 	interface Props {
 		game: Game;
