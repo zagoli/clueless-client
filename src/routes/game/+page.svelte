@@ -6,6 +6,7 @@
 	import axios from 'axios';
 	import Questions from '$lib/components/Questions.svelte';
 	import Suggestions from '$lib/components/Suggestions.svelte';
+	import CardsOwner from '$lib/components/CardsOwners.svelte';
 
 	const newGame = async () => {
 		const res = await axios.post(
@@ -22,9 +23,12 @@
 
 <div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
-		<Tabs tabStyle="full" class="mx-auto">
+		<Tabs>
 			<TabItem title="Giocatori" class="w-full" open>
 				<Players {game} />
+			</TabItem>
+			<TabItem title="Carte" class="w-full">
+				<CardsOwner {game} />
 			</TabItem>
 			<TabItem title="Domande" class="w-full">
 				<Questions questions={game.questions} />

@@ -59,6 +59,15 @@ export class Game {
         return hand ? hand : [];
     }
 
+    whichPlayerOwns(card: string) {
+        for (const [player, hand] of Object.entries(this.#hands)) {
+            if (hand.includes(card)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     getAbsentCards(player: string) {
         const absent_cards = this.#absentCards[player];
         return absent_cards ? absent_cards : [];
