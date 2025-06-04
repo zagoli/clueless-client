@@ -99,18 +99,18 @@ describe('Game Store', () => {
         });
 
         it('should add cards to envelope', () => {
-            game.addToEnvelope(['Candlestick', 'Library']);
+            game.updateEnvelope(['Candlestick', 'Library']);
             expect(game.envelope).toEqual(['Candlestick', 'Library']);
         });
 
         it('should handle empty envelope additions', () => {
-            game.addToEnvelope([]);
+            game.updateEnvelope([]);
             expect(game.envelope).toEqual([]);
         });
 
         it('should concatenate multiple envelope additions', () => {
-            game.addToEnvelope(['Candlestick']);
-            game.addToEnvelope(['Library']);
+            game.updateEnvelope(['Candlestick']);
+            game.updateEnvelope(['Library']);
             expect(game.envelope).toEqual(['Candlestick', 'Library']);
         });
     });

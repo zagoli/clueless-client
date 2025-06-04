@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { Question, Questions } from '$lib/stores/game.svelte';
-	import { Button, Card } from 'flowbite-svelte';
+	import { game, type Question, type Questions } from '$lib/model/game.svelte';
+	import { Button, Hr } from 'flowbite-svelte';
 	import { flip } from 'svelte/animate';
+	import QuestionCard from './QuestionCard.svelte';
+	import { goto } from '$app/navigation';
 
 	interface Props {
 		questions: Questions;
@@ -29,6 +31,11 @@
 	);
 </script>
 
+<Button class="w-full" disabled={game.isUpdating} onclick={() => goto('/add-question')}
+	>Aggiungi una domanda</Button
+>
+<Hr />
+
 {#if questions.length === 0}
 	<p>Non hai inserito nessuna domanda.</p>
 {:else}
@@ -48,12 +55,6 @@
 
 {#each sortedQuestions as question (question)}
 	<div animate:flip={{ duration: 500 }}>
-		<Card class="mb-2 grid grid-cols-5 py-2 text-center">
-			<span class="text-xs">{question.askedBy}</span>
-			<span class="text-xs">{question.suspect}</span>
-			<span class="text-xs">{question.weapon}</span>
-			<span class="text-xs">{question.room}</span>
-			<span class="text-xs">{question.answeredBy}</span>
-		</Card>
+		<QuestionCard {question} />
 	</div>
 {/each}

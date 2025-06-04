@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card, Input, Button, ButtonGroup, Helper, Listgroup } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
-	import { game } from '$lib/stores/game.svelte';
+	import { game } from '$lib/model/game.svelte';
 
 	let newPlayerName = $state('');
 	let error = $state('');

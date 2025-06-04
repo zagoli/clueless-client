@@ -2,7 +2,7 @@
 	import { Button, Modal } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
-	import { game } from '$lib/stores/game.svelte';
+	import { game } from '$lib/model/game.svelte';
 
 	let showResetModal = $state(false);
 

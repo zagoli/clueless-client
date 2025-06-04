@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { Game } from '$lib/stores/game.svelte';
-	import { Button, Hr } from 'flowbite-svelte';
+	import type { Game } from '$lib/model/game.svelte';
+	import { Hr } from 'flowbite-svelte';
 	import PlayerSection from './PlayerSection.svelte';
 	import AddCardModal from './AddCardModal.svelte';
-	import { goto } from '$app/navigation';
+	import RevealedCards from './RevealedCards.svelte';
+	import RevealCardModal from './RevealCardModal.svelte';
 
 	interface Props {
 		game: Game;
@@ -18,12 +19,21 @@
 		addCardPlayer = player;
 		addCardModalOpen = true;
 	}
+
+	let revealCardModalOpen = $state(false);
+
+	function openRevealCardModal() {
+		revealCardModalOpen = true;
+	}
 </script>
 
-<Button class="w-full" disabled={game.isUpdating} onclick={() => goto('/add-question')}
-	>Aggiungi una domanda</Button
->
+<RevealedCards
+	revealedCards={game.revealedCards}
+	canRevealCard={!game.isUpdating}
+	{openRevealCardModal}
+/>
 <Hr />
+
 {#each game.players as playerName, i}
 	<PlayerSection
 		{playerName}
@@ -38,3 +48,4 @@
 {/each}
 
 <AddCardModal bind:open={addCardModalOpen} player={addCardPlayer} />
+<RevealCardModal bind:open={revealCardModalOpen} />

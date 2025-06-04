@@ -3,7 +3,7 @@
 	import { API_BASE_URL } from '$lib/config';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
-	import { game } from '$lib/stores/game.svelte';
+	import { game } from '$lib/model/game.svelte';
 
 	let playerName = $state('');
 	let error = $state('');
