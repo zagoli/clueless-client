@@ -23,7 +23,7 @@
 
 <div class="h-full w-full max-w-md">
 	{#if game.isStarted()}
-		<Tabs tabStyle="pill">
+		<Tabs tabStyle="pill" ulClass="overflow-x-auto">
 			<TabItem title="Giocatori" class="w-full" open>
 				<Players {game} />
 			</TabItem>
