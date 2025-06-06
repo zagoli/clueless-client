@@ -7,7 +7,7 @@
 </script>
 
 <div class="w-full">
-	<div class="flex items-start justify-between">
+	<div class="mt-2 flex items-start justify-between">
 		<h2 class="text-2xl font-semibold text-white">CARTE RIVELATE</h2>
 		<Button
 			color="light"
