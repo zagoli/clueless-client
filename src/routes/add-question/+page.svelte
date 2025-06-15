@@ -31,7 +31,6 @@
 
 			if (response.data) {
 				game.updateGame(response.data);
-				game.lastAskedByPlayer = askedBy;
 				game.addQuestion({
 					askedBy,
 					suspect,
@@ -39,6 +38,7 @@
 					room,
 					answeredBy: answeredBy === NOBODY ? 'Nessuno' : answeredBy
 				});
+				game.lastAskedByPlayer = askedBy;
 			}
 		} catch (_) {
 			alert('Errore, non ho aggiunto la domanda');
