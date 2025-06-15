@@ -32,7 +32,7 @@
 
 	<div class="mt-4">
 		<h3 class="font-medium">Carte in mano</h3>
-		<CardList cards={hand} color="green" />
+		<CardList cards={hand} color="lime" highlightDiscoveredCards={true} />
 	</div>
 
 	<div class="mt-4">

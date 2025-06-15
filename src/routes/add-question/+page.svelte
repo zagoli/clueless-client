@@ -40,8 +40,9 @@
 				});
 				game.lastAskedByPlayer = askedBy;
 			}
-		} catch (_) {
+		} catch (e) {
 			alert('Errore, non ho aggiunto la domanda');
+			console.error('Error adding question:', e);
 		} finally {
 			game.isUpdating = false;
 		}

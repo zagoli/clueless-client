@@ -25,11 +25,12 @@
 			);
 
 			if (response.data) {
-				game.updateGame(response.data);
 				game.addCardToUserAddedCards(card);
+				game.updateGame(response.data);
 			}
-		} catch (_) {
+		} catch (e) {
 			alert('Errore, non ho aggiunto la carta');
+			console.error('Error adding card:', e);
 		} finally {
 			game.isUpdating = false;
 		}
