@@ -40,13 +40,13 @@
 <div class="w-full">
 	<h2 class="text-center text-xl text-white">Carte nella busta</h2>
 	<div class="grid grid-cols-3 gap-2 py-4 text-center">
-		<Badge large color={envelope[0] ? 'lime' : 'gray'}>
+		<Badge large color={envelope[0] ? 'teal' : 'gray'}>
 			{envelope[0] ?? '?'}
 		</Badge>
-		<Badge large color={envelope[1] ? 'lime' : 'gray'}>
+		<Badge large color={envelope[1] ? 'teal' : 'gray'}>
 			{envelope[1] ?? '?'}
 		</Badge>
-		<Badge large color={envelope[2] ? 'lime' : 'gray'}>
+		<Badge large color={envelope[2] ? 'teal' : 'gray'}>
 			{envelope[2] ?? '?'}
 		</Badge>
 	</div>

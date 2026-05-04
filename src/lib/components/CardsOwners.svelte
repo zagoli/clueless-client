@@ -17,6 +17,13 @@
 			return owner ?? 'sconosciuto';
 		}
 	}
+
+	function cardColor(card: string): 'gray' | 'teal' | 'lime' {
+		const location = whereIsCard(card);
+		if (location === 'sconosciuto') return 'gray';
+		if (location === 'busta') return 'teal';
+		return 'lime';
+	}
 </script>
 
 <h2 class="mt-2 ml-2 text-2xl font-semibold text-white">Chi?</h2>
@@ -26,9 +33,9 @@
 			<TableBodyRow>
 				<TableBodyCell>{card}</TableBodyCell>
 				<TableBodyCell>
-					<Badge color={whereIsCard(card) === 'sconosciuto' ? 'gray' : 'green'}>
-						{whereIsCard(card).toLowerCase()}
-					</Badge>
+					   <Badge color={cardColor(card)}>
+						   {whereIsCard(card).toLowerCase()}
+					   </Badge>
 				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
@@ -42,9 +49,9 @@
 			<TableBodyRow>
 				<TableBodyCell>{card}</TableBodyCell>
 				<TableBodyCell>
-					<Badge color={whereIsCard(card) === 'sconosciuto' ? 'gray' : 'green'}>
-						{whereIsCard(card).toLowerCase()}
-					</Badge>
+					   <Badge color={cardColor(card)}>
+						   {whereIsCard(card).toLowerCase()}
+					   </Badge>
 				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
@@ -58,9 +65,9 @@
 			<TableBodyRow>
 				<TableBodyCell>{card}</TableBodyCell>
 				<TableBodyCell>
-					<Badge color={whereIsCard(card) === 'sconosciuto' ? 'gray' : 'green'}>
-						{whereIsCard(card).toLowerCase()}
-					</Badge>
+					   <Badge color={cardColor(card)}>
+						   {whereIsCard(card).toLowerCase()}
+					   </Badge>
 				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
