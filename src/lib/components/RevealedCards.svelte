@@ -22,7 +22,7 @@
 		</Button>
 	</div>
 	{#if revealedCards.length > 0}
-		<CardList cards={revealedCards} color="green" />
+		<CardList cards={revealedCards} color="lime" />
 	{:else}
 		<p class="mt-2 text-sm">Sono le carte che vengono mostrate a tutti all'inizio della partita!</p>
 	{/if}
