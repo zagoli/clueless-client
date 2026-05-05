@@ -10,7 +10,10 @@
 
 	const choosableCards = $derived(
 		cards.filter(
-			(card) => !game.getAllCardsInHands().includes(card) && !game.revealedCards.includes(card)
+			(card) =>
+				!game.getAllCardsInHands().includes(card) &&
+				!game.revealedCards.includes(card) &&
+				!game.getAbsentCards(player).includes(card)
 		)
 	);
 

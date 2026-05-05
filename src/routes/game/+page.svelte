@@ -2,6 +2,7 @@
 	import { API_BASE_URL } from '$lib/config';
 	import { TabItem, Tabs, Spinner } from 'flowbite-svelte';
 	import { game } from '$lib/model/game.svelte';
+	import { cards } from '$lib/model/cards';
 	import Players from '$lib/components/Players.svelte';
 	import axios from 'axios';
 	import Questions from '$lib/components/Questions.svelte';
@@ -11,7 +12,7 @@
 	const newGame = async () => {
 		const res = await axios.post(
 			`${API_BASE_URL}/new_game`,
-			{ players: game.players.length },
+			{ players: game.players.length, cards: cards },
 			{ withCredentials: true }
 		);
 		if (res.status !== 201) {

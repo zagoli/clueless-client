@@ -39,7 +39,7 @@
 		{playerName}
 		hand={game.getHand(playerName)}
 		absentCards={game.getAbsentCards(playerName)}
-		canAddCard={!game.isUpdating}
+		canAddCard={!game.isUpdating && game.getHand(playerName).length < game.maxCardsPerPlayer}
 		{openAddCardModal}
 	/>
 	{#if i < game.players.length - 1}
