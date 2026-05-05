@@ -1,4 +1,4 @@
-import { cardsByCategory, type CardCategory } from "./cards";
+import { cards, cardsByCategory, type CardCategory } from "./cards";
 
 export interface Question {
     askedBy: string;
@@ -111,6 +111,11 @@ export class Game {
 
     get envelope() {
         return this.#envelope;
+    }
+
+    get maxCardsPerPlayer() {
+        if (this.#players.length === 0) return 0;
+        return Math.floor((cards.length - 3) / this.#players.length);
     }
 
     addPlayer(player: string) {
