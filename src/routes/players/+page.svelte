@@ -43,8 +43,13 @@
 			}}
 		>
 			<ButtonGroup class="w-full">
-				<Input bind:value={newPlayerName} placeholder="Nome" autofocus />
-				<Button type="submit">Aggiungi</Button>
+				<Input
+					bind:value={newPlayerName}
+					placeholder="Nome"
+					disabled={otherPlayers.length === 5}
+					autofocus
+				/>
+				<Button type="submit" disabled={otherPlayers.length === 5}>Aggiungi</Button>
 			</ButtonGroup>
 			{#if error}
 				<Helper class="mt-2 text-sm">{error}</Helper>
