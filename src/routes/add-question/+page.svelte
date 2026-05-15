@@ -39,10 +39,6 @@
 					answeredBy: answeredBy === NOBODY ? 'Nessuno' : answeredBy
 				});
 				game.lastAskedByPlayer = askedBy;
-				suspect = '';
-				weapon = '';
-				room = '';
-				answeredBy = '';
 			}
 		} catch (e) {
 			alert('Errore, non ho aggiunto la domanda');
