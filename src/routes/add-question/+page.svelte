@@ -39,6 +39,10 @@
 					answeredBy: answeredBy === NOBODY ? 'Nessuno' : answeredBy
 				});
 				game.lastAskedByPlayer = askedBy;
+				suspect = '';
+				weapon = '';
+				room = '';
+				answeredBy = '';
 			}
 		} catch (e) {
 			alert('Errore, non ho aggiunto la domanda');
@@ -46,7 +50,6 @@
 		} finally {
 			game.isUpdating = false;
 		}
-		goto('/game');
 	}
 </script>
 
@@ -107,7 +110,7 @@
 
 			<div class="flex gap-4">
 				<Button type="button" class="flex-1" color="alternative" onclick={() => goto('/game')}
-					>Annulla</Button
+					>Indietro</Button
 				>
 				<Button type="submit" class="flex-1" disabled={game.isUpdating}>Aggiungi</Button>
 			</div>
